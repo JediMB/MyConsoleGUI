@@ -26,6 +26,7 @@ namespace MyConsoleGUI
             DrawGUI();
             CreateContent();
 
+            // TODO: Something that makes sure the selected textbox is rendered as such
             //if (textBoxes.Count > 0)
             //    textBoxes[0].Render();
         }
@@ -72,14 +73,14 @@ namespace MyConsoleGUI
         #region Logic Loop
         public void RunLoop()
         {
-            while (!quit)
+            while (quit is not true)
             {
                 Input();
             }
         }
 
         /// <summary>
-        /// Handles all user input, which is primarily about manipulating textboxes.
+        /// Handles all user input.
         /// </summary>
         private void Input()
         {

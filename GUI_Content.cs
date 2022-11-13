@@ -412,20 +412,20 @@ namespace ConsoleGUI
             /// </summary>
             public static void PrevTextbox()
             {
-                if (textBoxes.Count != 0)
-                {
-                    TextBox prevSelection = textBoxes[textBoxSelection];
+                if (textBoxes.Count < 1)
+                    return;
 
-                    textBoxSelection--;
+                TextBox prevSelection = textBoxes[textBoxSelection];
 
-                    if (textBoxSelection == byte.MaxValue)
-                        textBoxSelection = (byte)(textBoxes.Count - 1);
+                textBoxSelection--;
 
-                    prevSelection.Render();
+                if (textBoxSelection == byte.MaxValue)
+                    textBoxSelection = (byte)(textBoxes.Count - 1);
 
-                    if (prevSelection != textBoxes[textBoxSelection])
-                        textBoxes[textBoxSelection].Render();
-                }
+                prevSelection.Render();
+
+                if (prevSelection != textBoxes[textBoxSelection])
+                    textBoxes[textBoxSelection].Render();
             }
 
             /// <summary>
@@ -433,31 +433,35 @@ namespace ConsoleGUI
             /// </summary>
             public static void NextTextbox()
             {
-                if (textBoxes.Count != 0)
-                {
-                    TextBox prevSelection = textBoxes[textBoxSelection];
+                if (textBoxes.Count < 1)
+                    return;
 
-                    textBoxSelection++;
+                TextBox prevSelection = textBoxes[textBoxSelection];
 
-                    if (textBoxSelection >= textBoxes.Count)
-                        textBoxSelection = 0;
+                textBoxSelection++;
 
-                    prevSelection.Render();
-                    if (prevSelection != textBoxes[textBoxSelection])
-                        textBoxes[textBoxSelection].Render();
-                }
+                if (textBoxSelection >= textBoxes.Count)
+                    textBoxSelection = 0;
+
+                prevSelection.Render();
+                if (prevSelection != textBoxes[textBoxSelection])
+                    textBoxes[textBoxSelection].Render();
             }
 
             public static void PrevSelection()
             {
-                if (textBoxes.Count > 0)
-                    textBoxes[textBoxSelection].PrevLine();
+                if (textBoxes.Count < 1)
+                    return;
+
+                textBoxes[textBoxSelection].PrevLine();
             }
 
             public static void NextSelection()
             {
-                if (textBoxes.Count > 0)
-                    textBoxes[textBoxSelection].NextLine();
+                if (textBoxes.Count < 1)
+                    return;
+
+                textBoxes[textBoxSelection].NextLine();
             }
 
             /// <summary>
@@ -465,6 +469,7 @@ namespace ConsoleGUI
             /// </summary>
             public static void UseSelection()
             {
+                // TODO: Makes sense to be able to determine what logic is attached to a selection in the actual logic code, rather than GUI. Maybe pass a method as a parameter and store it in the textbox data?
                 throw new NotImplementedException("Selection function has not been implemented.");
             }
 
@@ -473,8 +478,10 @@ namespace ConsoleGUI
             /// </summary>
             public static void ClearTextbox()
             {
-                if (textBoxes.Count > 0)
-                    textBoxes[textBoxSelection].Text = "";
+                if (textBoxes.Count < 1)
+                    return;
+
+                textBoxes[textBoxSelection].Text = "";
             }
 
             /// <summary>
@@ -482,8 +489,10 @@ namespace ConsoleGUI
             /// </summary>
             public static void InsertIntoTextbox(string text)
             {
-                if (textBoxes.Count > 0)
-                    textBoxes[textBoxSelection].AddText(text, 2, true, false, true);
+                if (textBoxes.Count < 1)
+                    return;
+                
+                textBoxes[textBoxSelection].AddText(text, 2, true, false, true);
             }
         }
     }
